@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `accounting`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `accounting` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Category` int(11) DEFAULT NULL,
   `Equipment` int(11) DEFAULT NULL,
   `Zip` int(11) DEFAULT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `accounting` (
   `Kolvo` int(11) DEFAULT NULL,
   `InvNumber` varchar(45) DEFAULT NULL,
   `supplier` int(11) DEFAULT NULL,
-  `Devision` int(11) DEFAULT NULL,
+  `Division` int(11) DEFAULT NULL,
   `Status` int(11) DEFAULT NULL,
   `DatePost` date DEFAULT NULL,
   `DateEdit` date DEFAULT NULL,
@@ -44,10 +44,10 @@ CREATE TABLE `accounting` (
   KEY `fk_accounting_status1_idx` (`Status`),
   KEY `fk_accounting_category1_idx` (`Category`),
   KEY `fk_accounting_zip1_idx` (`Zip`),
-  KEY `fk_accounting_devision1_idx` (`Devision`),
+  KEY `fk_accounting_devision1_idx` (`Division`),
   KEY `fk_accounting_supplier1_idx` (`supplier`),
   CONSTRAINT `fk_accounting_category1` FOREIGN KEY (`Category`) REFERENCES `category` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_accounting_devision1` FOREIGN KEY (`Devision`) REFERENCES `devision` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_accounting_devision1` FOREIGN KEY (`Division`) REFERENCES `division` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_accounting_equipment1` FOREIGN KEY (`Equipment`) REFERENCES `equipment` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_accounting_sotrud1` FOREIGN KEY (`Sotrud`) REFERENCES `sotrud` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_accounting_status1` FOREIGN KEY (`Status`) REFERENCES `status` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -73,7 +73,7 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Category` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -96,7 +96,7 @@ DROP TABLE IF EXISTS `changelog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `changelog` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Accounting` int(11) DEFAULT NULL,
   `Date` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`),
@@ -115,26 +115,26 @@ LOCK TABLES `changelog` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `devision`
+-- Table structure for table `division`
 --
 
-DROP TABLE IF EXISTS `devision`;
+DROP TABLE IF EXISTS `division`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `devision` (
-  `ID` int(11) NOT NULL,
-  `Devision` varchar(45) DEFAULT NULL,
+CREATE TABLE `division` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Division` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `devision`
+-- Dumping data for table `division`
 --
 
-LOCK TABLES `devision` WRITE;
-/*!40000 ALTER TABLE `devision` DISABLE KEYS */;
-/*!40000 ALTER TABLE `devision` ENABLE KEYS */;
+LOCK TABLES `division` WRITE;
+/*!40000 ALTER TABLE `division` DISABLE KEYS */;
+/*!40000 ALTER TABLE `division` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -145,7 +145,7 @@ DROP TABLE IF EXISTS `equipment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `equipment` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Equipment` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -161,6 +161,30 @@ LOCK TABLES `equipment` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `role`
+--
+
+DROP TABLE IF EXISTS `role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `role` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Role` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role`
+--
+
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'Администратор'),(2,'Модератор');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sotrud`
 --
 
@@ -168,13 +192,13 @@ DROP TABLE IF EXISTS `sotrud`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sotrud` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FIO` varchar(45) DEFAULT NULL,
   `Phone` varchar(45) DEFAULT NULL,
   `User` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `fk_sotrud_users_idx` (`User`),
-  CONSTRAINT `fk_sotrud_users` FOREIGN KEY (`User`) REFERENCES `users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_sotrud_users` FOREIGN KEY (`User`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -195,7 +219,7 @@ DROP TABLE IF EXISTS `status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `status` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -218,7 +242,7 @@ DROP TABLE IF EXISTS `supplier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `supplier` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) DEFAULT NULL,
   `INN` varchar(45) DEFAULT NULL,
   `Adress` varchar(45) DEFAULT NULL,
@@ -239,27 +263,31 @@ LOCK TABLES `supplier` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `users`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
-  `ID` int(11) NOT NULL,
+CREATE TABLE `user` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Login` varchar(45) DEFAULT NULL,
   `Password` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `Role` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `fk_users_role1_idx` (`Role`),
+  CONSTRAINT `fk_users_role1` FOREIGN KEY (`Role`) REFERENCES `role` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `user`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (5,'1','1',1),(6,'2','2',1),(7,'3','3',2);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -270,7 +298,7 @@ DROP TABLE IF EXISTS `zip`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `zip` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Zip` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -302,4 +330,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-08 17:25:11
+-- Dump completed on 2019-11-11 16:46:30
