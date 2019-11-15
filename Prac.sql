@@ -35,6 +35,7 @@ CREATE TABLE `accounting` (
   `supplier` int(11) DEFAULT NULL,
   `Division` int(11) DEFAULT NULL,
   `Status` int(11) DEFAULT NULL,
+  `Comment` varchar(70) DEFAULT NULL,
   `DatePost` date DEFAULT NULL,
   `DateEdit` date DEFAULT NULL,
   `Sotrud` int(11) DEFAULT NULL,
@@ -53,7 +54,7 @@ CREATE TABLE `accounting` (
   CONSTRAINT `fk_accounting_status1` FOREIGN KEY (`Status`) REFERENCES `status` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_accounting_supplier1` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_accounting_zip1` FOREIGN KEY (`Zip`) REFERENCES `zip` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,6 +63,7 @@ CREATE TABLE `accounting` (
 
 LOCK TABLES `accounting` WRITE;
 /*!40000 ALTER TABLE `accounting` DISABLE KEYS */;
+INSERT INTO `accounting` VALUES (1,2,1,2,'1',22,'1',1,7,3,'','2011-11-11','2019-11-15',1),(2,1,1,1,'1234',1234,'1234',1,1,1,'Комментарий','2019-11-14','2019-11-14',1);
 /*!40000 ALTER TABLE `accounting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,7 +78,7 @@ CREATE TABLE `category` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Category` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,6 +87,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (1,'Оборудование'),(2,'ЗИП');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +105,7 @@ CREATE TABLE `changelog` (
   PRIMARY KEY (`ID`),
   KEY `fk_changelog_accounting1_idx` (`Accounting`),
   CONSTRAINT `fk_changelog_accounting1` FOREIGN KEY (`Accounting`) REFERENCES `accounting` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,6 +114,7 @@ CREATE TABLE `changelog` (
 
 LOCK TABLES `changelog` WRITE;
 /*!40000 ALTER TABLE `changelog` DISABLE KEYS */;
+INSERT INTO `changelog` VALUES (1,1,'2019-11-15');
 /*!40000 ALTER TABLE `changelog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,7 +129,7 @@ CREATE TABLE `division` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Division` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,6 +138,7 @@ CREATE TABLE `division` (
 
 LOCK TABLES `division` WRITE;
 /*!40000 ALTER TABLE `division` DISABLE KEYS */;
+INSERT INTO `division` VALUES (1,'МПЗ'),(2,'СГП'),(3,'ПФ'),(4,'ЗСК'),(5,'Авто'),(6,'офис'),(7,'СПб'),(8,'общее'),(9,'новое');
 /*!40000 ALTER TABLE `division` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +153,7 @@ CREATE TABLE `equipment` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Equipment` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,6 +162,7 @@ CREATE TABLE `equipment` (
 
 LOCK TABLES `equipment` WRITE;
 /*!40000 ALTER TABLE `equipment` DISABLE KEYS */;
+INSERT INTO `equipment` VALUES (1,'-'),(2,'Оборудованиес');
 /*!40000 ALTER TABLE `equipment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +177,7 @@ CREATE TABLE `role` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Role` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,7 +205,7 @@ CREATE TABLE `sotrud` (
   PRIMARY KEY (`ID`),
   KEY `fk_sotrud_users_idx` (`User`),
   CONSTRAINT `fk_sotrud_users` FOREIGN KEY (`User`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,6 +214,7 @@ CREATE TABLE `sotrud` (
 
 LOCK TABLES `sotrud` WRITE;
 /*!40000 ALTER TABLE `sotrud` DISABLE KEYS */;
+INSERT INTO `sotrud` VALUES (1,'Кедф','11',1);
 /*!40000 ALTER TABLE `sotrud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,7 +229,7 @@ CREATE TABLE `status` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,6 +238,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
+INSERT INTO `status` VALUES (1,'Заказан'),(2,'Получен'),(3,'На складе'),(4,'Установлен');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,12 +253,12 @@ CREATE TABLE `supplier` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) DEFAULT NULL,
   `INN` varchar(45) DEFAULT NULL,
-  `Adress` varchar(45) DEFAULT NULL,
+  `Adress` varchar(70) DEFAULT NULL,
   `PastName` varchar(45) DEFAULT NULL,
   `Site` varchar(45) DEFAULT NULL,
-  `ContractPerson` varchar(45) DEFAULT NULL,
+  `ContractPerson` varchar(70) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,6 +267,7 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
+INSERT INTO `supplier` VALUES (1,'Имя','123','Адресец','Имечко','site.ru','IA'),(2,'Имяч','1234','123','123','1','1');
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,7 +295,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (5,'1','1',1),(6,'2','2',1),(7,'3','3',2);
+INSERT INTO `user` VALUES (1,'12','1',1),(2,'2','2',2);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,7 +310,7 @@ CREATE TABLE `zip` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Zip` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -310,6 +319,7 @@ CREATE TABLE `zip` (
 
 LOCK TABLES `zip` WRITE;
 /*!40000 ALTER TABLE `zip` DISABLE KEYS */;
+INSERT INTO `zip` VALUES (1,'-'),(2,'Зипс');
 /*!40000 ALTER TABLE `zip` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,4 +340,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-11 16:46:30
+-- Dump completed on 2019-11-15 17:20:16
